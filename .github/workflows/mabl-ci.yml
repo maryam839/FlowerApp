@@ -26,4 +26,4 @@ jobs:
         run: mabl --version
 
       - name: Run Mabl Plan
-        run: mabl test run --plan-id rrfp3xJevkiRdqJwjyoZ5Q-w --api-key ${{ secrets.MABL_API_KEY }}
+        run: mabl tests run --plan-id rrfp3xJevkiRdqJwjyoZ5Q-w --api-key ${{ secrets.MABL_API_KEY }}
