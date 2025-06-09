@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   run-mabl-tests:
@@ -15,7 +15,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Mabl CLI
-        run: curl -s https://app.mabl.com/install/mabl-cli-linux | bash
+        run: |
+          curl -sL https://app.mabl.com/install/mabl-cli-linux | bash
+          chmod +x mabl-cli
+
+      - name: Verify CLI Installed
+        run: ./mabl-cli --help
 
       - name: Run Mabl Plan
-        run: ./mabl-cli test run --plan-id <rrfp3xJevkiRdqJwjyoZ5Q-w> --api-key ${{ secrets.MABL_API_KEY }}
+        run: ./mabl-cli test run --plan-id rrfp3xJevkiRdqJwjyoZ5Q-w --api-key ${{ secrets.MABL_API_KEY }}
