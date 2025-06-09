@@ -1,13 +1,29 @@
-- name: Setup Node.js
-  uses: actions/setup-node@v3
-  with:
-    node-version: '16'
+name: Run Mabl Tests on Push
 
-- name: Install Mabl CLI
-  run: npm install -g @mablhq/mabl-cli
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-- name: Verify CLI Installed
-  run: mabl --version
+jobs:
+  run-mabl-tests:
+    runs-on: ubuntu-latest
 
-- name: Run Mabl Plan
-  run: mabl test run --plan-id rrfp3xJevkiRdqJwjyoZ5Q-w --api-key ${{ secrets.MABL_API_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Mabl CLI
+        run: npm install -g @mablhq/mabl-cli
+
+      - name: Verify Mabl CLI Installed
+        run: mabl --version
+
+      - name: Run Mabl Plan
+        run: mabl test run --plan-id rrfp3xJevkiRdqJwjyoZ5Q-w --api-key ${{ secrets.MABL_API_KEY }}
